@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>字幕飘窗</title>
+  <title>EZ字幕提词器</title>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -40,7 +40,7 @@
   <script type="text/babel">
     const { useState, useEffect, useRef, useCallback } = React;
     const STORAGE_KEY = 'ez-teleprompter:v1';
-    const DEFAULT_TEXT = `欢迎使用字幕飘窗程序
+    const DEFAULT_TEXT = `欢迎使用EZ字幕提词器
 Welcome to Subtitle Marquee
 
 这是一个支持超长文本的垂直滚动字幕系统
@@ -608,7 +608,7 @@ Welcome to Subtitle Marquee
                 gap: '10px'
               }}>
                 <span style={{ fontSize: '24px' }}>🎬</span>
-                字幕飘窗设置
+                EZ字幕提词器设置
               </h2>
 
               <div style={{ marginBottom: '20px' }}>

@@ -1,83 +1,80 @@
-# 字幕飘窗 (HTML Version)
+# EZ字幕提词器（HTML 版本）
 
-A vertical scrolling subtitle/teleprompter application that runs directly in your browser.
+一个可直接在浏览器中运行的垂直滚动提词器工具。
 
-## Features
+## 功能特点
 
-- 📜 **Vertical Scrolling** — Text scrolls from bottom to top
-- ⚡ **Adjustable Speed** — Control scroll speed from very slow to fast
-- 🎨 **Theme Options** — Multiple preset color themes
-- 🌗 **Dark/Light Mode** — Switch app UI between dark and light appearance
-- 📏 **Customizable** — Font size, line height, background opacity
-- 🖱️ **Drag & Drop** — Reposition the subtitle window anywhere
-- ↔️ **Resizable** — Drag the corner to resize
-- 📱 **Touch Support** — Drag and resize on touch devices
-- 🔄 **Mouse Wheel** — Scroll through text manually
-- ⌨️ **Keyboard Shortcuts** — Control playback and settings quickly
-- 📝 **Skip Empty Lines** — Compact display with adjustable paragraph spacing
-- ▶️ **Playback Controls** — Play, pause, reset
-- 💾 **Auto Save** — Remembers text and settings via localStorage
+- 📜 垂直滚动：文本从下向上平滑滚动
+- ⚡ 速度可调：支持 1%~100% 滚动速度
+- 🎨 颜色方案：内置多套文字/背景配色
+- 🌗 明暗模式：支持浅色模式与深色模式切换
+- 📏 显示可调：字体大小、行高、背景透明度可调
+- 🖱️ 拖拽定位：可自由拖动飘窗位置
+- ↔️ 尺寸调整：可拖动右下角调整大小
+- 📱 触控支持：支持触摸拖拽与缩放
+- 🔄 滚轮浏览：可用鼠标滚轮手动浏览文本
+- 📝 跳过空行：可压缩段落并设置段落间距
+- ▶️ 播放控制：播放/暂停/重置
+- 💾 自动保存：文本与设置会保存到 localStorage
 
-## Usage
+## 使用方法
 
-1. **Open** — Double-click `ez-teleprompter.html` to open in your browser
-2. **Enter Text** — Paste or type your script in the settings panel
-3. **Adjust Settings** — Configure speed, font size, colors as needed
-4. **Position** — Drag the subtitle box to your preferred location
-5. **Start** — Text will auto-scroll; use pause/play as needed
+1. 双击打开 `ez-teleprompter.html`
+2. 在设置面板输入或粘贴台词文本
+3. 按需调整速度、字体、配色等参数
+4. 拖动字幕窗口到合适位置
+5. 点击播放开始滚动（或使用快捷键）
 
-## Controls
+## 操作说明
 
-| Action | How |
-|--------|-----|
-| Move subtitle | Drag the subtitle box |
-| Resize | Drag bottom-right corner |
-| Browse text | Mouse wheel on subtitle |
-| Open/close settings | Click ⚙ button |
-| Pause/Play | Click ⏸/▶ button |
-| Reset to start | Click ↺ button |
+| 操作 | 方式 |
+|------|------|
+| 移动飘窗 | 拖拽字幕窗口 |
+| 调整大小 | 拖拽右下角 |
+| 手动浏览 | 在字幕区滚动鼠标滚轮 |
+| 打开/关闭设置 | 点击右下角 ⚙ 按钮 |
+| 播放/暂停 | 点击 ⏸/▶ 按钮 |
+| 重置到开头 | 点击 ↺ 按钮 |
+| 切换明暗模式 | 设置面板中的“明暗模式”开关 |
 
-### Keyboard Shortcuts
+## 键盘快捷键
 
-| Action | Shortcut |
-|--------|----------|
-| Pause/Play | `Space` |
-| Reset | `R` |
-| Speed up/down | `↑` / `↓` |
-| Font size up/down | `→` / `←` |
-| Toggle settings panel | `S` |
-| Toggle dark/light mode | `D` |
+| 操作 | 快捷键 |
+|------|--------|
+| 播放/暂停 | `Space` |
+| 重置 | `R` |
+| 加快/减慢速度 | `↑` / `↓` |
+| 增大/减小字号 | `→` / `←` |
+| 开关设置面板 | `S` |
+| 切换明暗模式 | `D` |
 
-## Settings
+## 设置项说明
 
-| Setting | Description |
-|---------|-------------|
-| 字幕文本 | Enter your subtitle text (supports long text) |
-| 滚动速度 | Scroll speed (1% = very slow, 100% = fast) |
-| 字体大小 | Font size (16px - 72px) |
-| 行高 | Line height (1.2 - 3.0) |
-| 背景透明度 | Background opacity (0% - 100%) |
-| 跳过空行 | Skip empty lines in display |
-| 段落间距 | Paragraph gap when skipping empty lines |
-| 颜色方案 | Select from preset text/background color themes |
-| 明暗模式 | Toggle app interface between dark and light mode |
+| 设置项 | 说明 |
+|--------|------|
+| 字幕文本 | 输入字幕内容，支持超长文本 |
+| 滚动速度 | 1%（很慢）到 100%（很快） |
+| 字体大小 | 16px - 72px |
+| 行高 | 1.2 - 3.0 |
+| 背景透明度 | 0% - 100% |
+| 跳过空行 | 跳过空白段落，压缩显示 |
+| 段落间距 | 开启跳过空行后可调 |
+| 颜色方案 | 切换不同文字/背景配色 |
+| 明暗模式 | 切换浅色/深色界面 |
 
-## Requirements
+## 运行要求
 
-- Modern web browser (Chrome, Firefox, Edge, Safari)
-- Internet connection (for loading React libraries)
+- 现代浏览器（Chrome / Firefox / Edge / Safari）
+- 需要联网加载 CDN 资源（React / ReactDOM / Babel）
 
-## Limitations
+## 离线使用
 
-- Requires internet to load React from CDN
+若需离线运行，请下载以下文件并把 HTML 中对应的 `<script>` 地址改为本地路径：
 
-## Offline Use
-
-To use offline, download these files and update the `<script>` tags in the HTML:
 - https://unpkg.com/react@18/umd/react.production.min.js
 - https://unpkg.com/react-dom@18/umd/react-dom.production.min.js
 - https://unpkg.com/@babel/standalone/babel.min.js
 
-## License
+## 许可证
 
 MIT

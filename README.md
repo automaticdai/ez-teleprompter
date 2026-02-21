@@ -6,17 +6,21 @@ A vertical scrolling subtitle/teleprompter application that runs directly in you
 
 - 📜 **Vertical Scrolling** — Text scrolls from bottom to top
 - ⚡ **Adjustable Speed** — Control scroll speed from very slow to fast
-- 🎨 **Theme Options** — White or black background
+- 🎨 **Theme Options** — Multiple preset color themes
+- 🌗 **Dark/Light Mode** — Switch app UI between dark and light appearance
 - 📏 **Customizable** — Font size, line height, background opacity
 - 🖱️ **Drag & Drop** — Reposition the subtitle window anywhere
 - ↔️ **Resizable** — Drag the corner to resize
+- 📱 **Touch Support** — Drag and resize on touch devices
 - 🔄 **Mouse Wheel** — Scroll through text manually
+- ⌨️ **Keyboard Shortcuts** — Control playback and settings quickly
 - 📝 **Skip Empty Lines** — Compact display with adjustable paragraph spacing
 - ▶️ **Playback Controls** — Play, pause, reset
+- 💾 **Auto Save** — Remembers text and settings via localStorage
 
 ## Usage
 
-1. **Open** — Double-click `subtitle-marquee.html` to open in your browser
+1. **Open** — Double-click `ez-teleprompter.html` to open in your browser
 2. **Enter Text** — Paste or type your script in the settings panel
 3. **Adjust Settings** — Configure speed, font size, colors as needed
 4. **Position** — Drag the subtitle box to your preferred location
@@ -33,6 +37,17 @@ A vertical scrolling subtitle/teleprompter application that runs directly in you
 | Pause/Play | Click ⏸/▶ button |
 | Reset to start | Click ↺ button |
 
+### Keyboard Shortcuts
+
+| Action | Shortcut |
+|--------|----------|
+| Pause/Play | `Space` |
+| Reset | `R` |
+| Speed up/down | `↑` / `↓` |
+| Font size up/down | `→` / `←` |
+| Toggle settings panel | `S` |
+| Toggle dark/light mode | `D` |
+
 ## Settings
 
 | Setting | Description |
@@ -44,7 +59,8 @@ A vertical scrolling subtitle/teleprompter application that runs directly in you
 | 背景透明度 | Background opacity (0% - 100%) |
 | 跳过空行 | Skip empty lines in display |
 | 段落间距 | Paragraph gap when skipping empty lines |
-| 背景颜色 | White or black background |
+| 颜色方案 | Select from preset text/background color themes |
+| 明暗模式 | Toggle app interface between dark and light mode |
 
 ## Requirements
 
@@ -53,7 +69,6 @@ A vertical scrolling subtitle/teleprompter application that runs directly in you
 
 ## Limitations
 
-- The "Always on Top" (置顶) feature only affects z-index within the page, not actual window-level always-on-top (use the Electron version for true desktop-level always-on-top)
 - Requires internet to load React from CDN
 
 ## Offline Use

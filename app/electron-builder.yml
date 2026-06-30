@@ -1,0 +1,36 @@
+appId: com.automaticdai.ezteleprompter
+productName: EZ Teleprompter
+copyright: Copyright © 2026 automaticdai
+
+directories:
+  output: dist
+  buildResources: build
+
+files:
+  - out/**
+  - package.json
+  # Bundled so the system-tray icon resolves at runtime inside the asar.
+  - build/icon.png
+
+# Bundle the built main/preload/renderer from out/. node_modules are dev-only
+# (react/electron are bundled or provided by the runtime), so they are excluded.
+asar: true
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: EZ Teleprompter
+
+portable:
+  artifactName: ${productName}-${version}-portable.${ext}

@@ -1,0 +1,44 @@
+# ---- Dependencies ----
+node_modules/
+.pnp
+.pnp.js
+
+# ---- Build / packaging output ----
+# electron-vite bundles (app/out) and electron-builder / @electron/packager
+# artifacts incl. the packaged win32 folder and the distributable .zip (app/dist).
+out/
+dist/
+.vite/
+*.tsbuildinfo
+# NOTE: app/build/ is intentionally tracked — it holds the source icon
+# (build/icon.png) bundled into the app and the exe. Do not ignore build/.
+
+# ---- Logs ----
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- Environment / secrets ----
+.env
+.env.*
+!.env.example
+
+# ---- Test coverage ----
+coverage/
+
+# ---- Editor / IDE ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- OS cruft ----
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ---- Claude Code (personal, machine-local settings) ----
+.claude/settings.local.json

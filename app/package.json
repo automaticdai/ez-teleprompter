@@ -1,0 +1,30 @@
+{
+  "name": "ez-teleprompter-app",
+  "version": "1.0.0",
+  "description": "EZ Teleprompter — transparent always-on-top desktop teleprompter overlay",
+  "author": "automaticdai",
+  "license": "MIT",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "start": "electron-vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dist": "electron-vite build && electron-builder --win",
+    "dist:portable": "electron-vite build && electron-builder --win portable",
+    "package:win": "electron-vite build && electron-packager . \"EZ Teleprompter\" --platform=win32 --arch=x64 --out=dist --overwrite --asar --ignore=\"^/(src|test|dist|node_modules)($|/)\" --ignore=\"^/(\\.gitignore|electron-builder\\.yml)$\" --ignore=\"\\.config\\.js$\""
+  },
+  "devDependencies": {
+    "@electron/packager": "^18.4.4",
+    "@vitejs/plugin-react": "^4.3.3",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^2.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.5"
+  }
+}

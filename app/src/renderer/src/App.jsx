@@ -187,6 +187,10 @@ export default function App() {
       className={`glass-card ${locked ? 'locked' : ''}`}
       style={{ background: cardBg, '--edge': hexToRgba(settings.textColor, 0.18) }}
     >
+      <div className="move-bar" title="拖动移动窗口">
+        ⋮⋮
+      </div>
+
       <ReadingArea
         engine={engine}
         settings={settings}

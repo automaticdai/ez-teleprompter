@@ -50,6 +50,26 @@ function dispatchToRenderer(command) {
   if (win && !win.isDestroyed()) win.webContents.send('command', command)
 }
 
+// Decode an imported text file without assuming UTF-8. Windows-produced
+// Chinese .txt files are very often GBK/GB18030, which would mojibake under a
+// blind utf-8 read. BOMs win; otherwise try strict UTF-8 and fall back to
+// GB18030 (superset of GBK/GB2312).
+function decodeText(buffer) {
+  if (buffer.length >= 2) {
+    if (buffer[0] === 0xff && buffer[1] === 0xfe) return new TextDecoder('utf-16le').decode(buffer)
+    if (buffer[0] === 0xfe && buffer[1] === 0xff) return new TextDecoder('utf-16be').decode(buffer)
+  }
+  try {
+    return new TextDecoder('utf-8', { fatal: true }).decode(buffer)
+  } catch {
+    try {
+      return new TextDecoder('gb18030').decode(buffer)
+    } catch {
+      return buffer.toString('utf-8') // lossy last resort
+    }
+  }
+}
+
 function registerIpc() {
   ipcMain.handle('settings:load', () => currentSettings)
 
@@ -135,8 +155,8 @@ function registerIpc() {
       properties: ['openFile']
     })
     if (canceled || !filePaths[0]) return null
-    const content = await readFile(filePaths[0], 'utf-8')
-    return { name: basename(filePaths[0]), content }
+    const buffer = await readFile(filePaths[0])
+    return { name: basename(filePaths[0]), content: decodeText(buffer) }
   })
 
   // ---- detached controls console ----
@@ -155,7 +175,11 @@ function registerIpc() {
     if (!controls || controls.isDestroyed() || !size) return
     const width = Math.max(120, Math.round(size.width))
     const height = Math.max(48, Math.round(size.height))
+    // Some platforms refuse programmatic resizes on non-resizable windows;
+    // briefly lift the flag so the fit-to-content resize always applies.
+    controls.setResizable(true)
     controls.setSize(width, height)
+    controls.setResizable(false)
     dockControls()
   })
 

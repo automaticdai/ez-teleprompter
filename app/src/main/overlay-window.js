@@ -32,7 +32,9 @@ export function createOverlayWindow(settings) {
     icon: join(__dirname, '../../build/icon.png'),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false,
+      // The preload only touches contextBridge/ipcRenderer, so the stricter
+      // Chromium sandbox can stay on.
+      sandbox: true,
       contextIsolation: true,
       nodeIntegration: false
     }

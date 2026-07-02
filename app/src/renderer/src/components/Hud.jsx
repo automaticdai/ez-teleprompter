@@ -80,7 +80,7 @@ export default function Hud({
       </button>
       <button
         className={`hud-btn ${editing ? 'active' : ''}`}
-        title="编辑文本（E）"
+        title="编辑文本（E 进入，Esc 退出）"
         onClick={() => onCommand('toggleEdit')}
       >
         ✏️

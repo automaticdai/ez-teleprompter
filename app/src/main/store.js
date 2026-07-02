@@ -2,25 +2,25 @@
 // Keeps the whole settings object in one file; debounced writes from the
 // renderer plus a synchronous flush on quit.
 import { app } from 'electron'
-import { readFileSync, writeFileSync, mkdirSync } from 'fs'
+import { readFileSync, writeFileSync, mkdirSync, renameSync } from 'fs'
 import { join, dirname } from 'path'
 
 const SETTINGS_PATH = join(app.getPath('userData'), 'settings.json')
 
 const SAMPLE_TEXT = [
-  'Welcome to EZ Teleprompter',
   '欢迎使用 EZ 提词器',
+  'Welcome to EZ Teleprompter',
   '',
+  '一个悬浮在其它应用之上、始终置顶的透明提词器。',
   'A transparent, always-on-top teleprompter that floats over your other apps.',
-  '一个悬浮在其它应用之上的透明提词器。',
   '',
-  'Press Space to play or pause.',
-  'Use the arrow keys to change speed and font size.',
-  'Press L to lock click-through, F for fullscreen.',
+  '点击下方控制台的 📂（或按 O）打开 .txt / .md / .srt 文稿；',
+  '点击 ✏️（或按 E）直接在页面上编辑文本。',
   '',
-  'Pair a Bluetooth remote or a game controller to scroll hands-free.',
+  '空格 播放 / 暂停 · ↑↓ 调速 · ←→ 调字号',
+  'L 锁定穿透点击 · F 全屏 · ? 查看全部快捷键',
   '',
-  'Open settings (gear icon) to paste your own script. ✨'
+  '配对蓝牙翻页器或游戏手柄即可免手滚动。✨'
 ].join('\n')
 
 export const DEFAULT_SETTINGS = {
@@ -57,7 +57,12 @@ export function loadSettings() {
 export function saveSettings(settings) {
   try {
     mkdirSync(dirname(SETTINGS_PATH), { recursive: true })
-    writeFileSync(SETTINGS_PATH, JSON.stringify(settings, null, 2), 'utf-8')
+    // Atomic write: the user's whole script lives in this file, so a crash
+    // mid-write must never leave a truncated JSON behind (loadSettings would
+    // silently fall back to defaults and the script would be lost).
+    const tmpPath = `${SETTINGS_PATH}.tmp`
+    writeFileSync(tmpPath, JSON.stringify(settings, null, 2), 'utf-8')
+    renameSync(tmpPath, SETTINGS_PATH)
     return true
   } catch {
     return false

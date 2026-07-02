@@ -9,7 +9,7 @@ const SHORTCUTS = [
   ['↑ / ↓', '加速 / 减速'],
   ['→ / ←', '放大 / 缩小字体'],
   ['O', '打开文件（.txt / .md / .srt）'],
-  ['E', '就地编辑文本'],
+  ['E', '就地编辑文本（Esc 退出）'],
   ['M', '水平镜像'],
   ['G', '阅读基准线'],
   ['L', '锁定穿透点击'],
@@ -59,6 +59,11 @@ export default function HelpPanel({ onClose, interactiveProps }) {
               </div>
             ))}
           </div>
+
+          <p className="help-note" style={{ marginTop: 10 }}>
+            开启<b>遥控模式</b>后，以下按键改为<b>全局</b>生效（即使窗口未聚焦）：PageDown / F8 播放暂停 · PageUp
+            回到顶部 · F6 / F7 减速 / 加速。
+          </p>
 
           <div className="field-label" style={{ marginTop: 14 }}>
             <span>关于</span>

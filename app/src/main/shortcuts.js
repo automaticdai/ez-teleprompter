@@ -32,7 +32,15 @@ export function createShortcutManager(dispatch) {
   }
 
   function unregister() {
-    globalShortcut.unregisterAll()
+    // Only release our own accelerators — unregisterAll() would silently kill
+    // any other global shortcut the app registers in the future.
+    for (const accel of Object.keys(GLOBAL_MAP)) {
+      try {
+        globalShortcut.unregister(accel)
+      } catch {
+        /* already gone */
+      }
+    }
   }
 
   return {

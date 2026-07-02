@@ -46,8 +46,11 @@
 - 🖥️ **多显示器** — 可将悬浮窗移动到指定显示器
 - 🪞 **镜像翻转** — 水平/垂直镜像，适配提词器反射玻璃
 - 📏 **阅读基准线** + **边缘渐隐**
-- 📂 **导入文件** — 支持 `.txt` / `.srt`（自动去除序号与时间轴）
-- 💾 **自动保存** — 文本、设置与窗口位置保存到用户数据目录 `settings.json`
+- 🎛️ **独立控制台** — 工具栏是一个停靠在提词窗下方的独立小窗口，自动跟随、按内容自适应大小，不遮挡台词，也不会抢走键盘焦点
+- 📂 **导入文件** — 支持 `.txt` / `.md`（自动去除 Markdown 标记）/ `.srt`（自动去除序号与时间轴），自动识别 UTF-8 / GBK / UTF-16 编码
+- ✏️ **就地编辑** — 按 `E` 直接在页面上修改台词，Esc 退出
+- 🀄 **中文界面** — 全部按钮提示、设置项与帮助均为中文
+- 💾 **自动保存** — 文本、设置与窗口位置保存到用户数据目录 `settings.json`（原子写入，崩溃不丢稿）
 - 🧰 **系统托盘** — 关闭即最小化到托盘，可从托盘切换锁定/遥控模式
 
 ### 环境要求
@@ -80,8 +83,12 @@ npm run dev          # 启动 electron-vite 开发模式（热更新）
 
 ```bash
 cd app
-npm test             # 运行 Vitest 单元测试（滚动引擎 / SRT 解析 / 键位映射）
+npm test             # Vitest 单元测试（滚动引擎 / SRT + Markdown 解析 / 键位映射 / 手柄 / 设置持久化）
 ```
+
+### 持续集成（GitHub Actions）
+
+推送到 `main` 会自动运行测试与构建；在 **Windows runner** 上用 electron-builder 产出带图标的单文件便携版与安装包（工件可在 Actions 页面下载）。给提交打 `v*` 标签会自动创建 GitHub Release 并附上 exe。配置见 [`.github/workflows/build.yml`](.github/workflows/build.yml)。
 
 ### 快捷键（应用窗口聚焦时）
 
@@ -91,8 +98,11 @@ npm test             # 运行 Vitest 单元测试（滚动引擎 / SRT 解析 / 
 | 重置到开头 | `R` |
 | 加快 / 减慢速度 | `↑` / `↓`（或 `PageUp` / `PageDown`） |
 | 增大 / 减小字号 | `→` / `←` |
+| 打开文件（.txt / .md / .srt） | `O` |
+| 就地编辑文本（Esc 退出） | `E` |
 | 切换设置抽屉 | `S` |
-| 显示 / 隐藏 HUD | `H` |
+| 帮助与快捷键 | `?` |
+| 显示 / 隐藏控制台 | `H` |
 | 切换全屏 | `F` |
 | 切换锁定（穿透点击） | `L` |
 | 水平镜像 | `M` |
@@ -121,7 +131,7 @@ npm test             # 运行 Vitest 单元测试（滚动引擎 / SRT 解析 / 
 | 加快 / 减慢速度 | `RB` / `LB`，或方向键 `↑` / `↓` |
 | 增大 / 减小字号 | 方向键 `→` / `←` |
 | 切换设置 | `Start` |
-| 显示/隐藏 HUD | `Select` |
+| 显示/隐藏控制台 | `Select` |
 | 微调滚动位置 | 右摇杆上下 |
 
 ### 架构概览
@@ -131,23 +141,26 @@ app/
 ├── electron.vite.config.js     # main / preload / renderer 三段构建
 ├── electron-builder.yml        # Windows NSIS + 便携版打包配置
 ├── src/
-│   ├── main/                   # 主进程：窗口、穿透、全局快捷键、托盘、持久化
+│   ├── main/                   # 主进程：提词窗 + 停靠控制台窗、穿透、全局快捷键、托盘、持久化
 │   ├── preload/                # contextBridge 暴露最小化 window.api
-│   └── renderer/               # React 渲染层：滚动引擎、HUD、设置抽屉、输入
+│   └── renderer/               # React 渲染层：滚动引擎、控制台、设置抽屉、帮助、输入
 └── test/                       # Vitest 单元测试
 ```
 
 - **进程分离**：主进程管理窗口/系统集成，渲染层用 React 绘制玻璃 UI，preload 通过 `contextBridge` 暴露受限 API。
-- **统一命令分发**：键盘、手柄、全局遥控、HUD 按钮全部汇入同一个 `dispatch(command)`。
+- **双窗口**：提词窗只画滚动文本与浮层；工具栏在独立的控制台窗口中（`#controls` 哈希加载同一份渲染包），由主进程负责停靠跟随，且不可获得焦点、不抢键盘。
+- **统一命令分发**：键盘、手柄、全局遥控、控制台按钮全部汇入同一个 `dispatch(command)`。
 - **滚动引擎**：基于 `requestAnimationFrame` 的时间增量滚动，缓存文本高度避免逐帧重排，时钟可注入以便单元测试。
 
 设计决策与取舍详见 [`docs/superpowers/specs/2026-06-28-teleprompter-desktop-app-design.md`](docs/superpowers/specs/2026-06-28-teleprompter-desktop-app-design.md)。
 
 ---
 
-## 📄 HTML 网页版
+## 📄 HTML 网页版（轻量版）
 
 一个可直接在浏览器中运行的垂直滚动提词器工具，单文件、零安装。
+
+> 网页版与桌面版**独立实现**：桌面版是主力维护版本（新功能会先出现在桌面版），网页版适合临时使用或无法安装软件的场合。
 
 ### 功能特点
 
@@ -228,4 +241,4 @@ CDN 资源均已**锁定具体版本**并附带 [SRI](https://developer.mozilla.
 
 ## 许可证
 
-MIT
+[MIT](LICENSE)

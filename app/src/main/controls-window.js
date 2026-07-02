@@ -25,11 +25,15 @@ export function createControlsWindow() {
     skipTaskbar: true,
     show: false,
     alwaysOnTop: true,
+    // Tool-palette behavior: clicking a button must NOT move OS focus here,
+    // or the prompter would stop receiving keyboard shortcuts after every
+    // toolbar click.
+    focusable: false,
     title: 'EZ 提词器 · 控制台',
     icon: join(__dirname, '../../build/icon.png'),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false,
+      sandbox: true,
       contextIsolation: true,
       nodeIntegration: false
     }

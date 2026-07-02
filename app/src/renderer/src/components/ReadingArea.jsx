@@ -111,7 +111,7 @@ export default function ReadingArea({ engine, settings, editing, onChangeText, o
               textAlign: settings.align || 'left'
             }}
           />
-          <button className="editor-done" onClick={onExitEdit} title="完成（Esc / E）">
+          <button className="editor-done" onClick={onExitEdit} title="完成（Esc）">
             ✓ 完成
           </button>
         </div>

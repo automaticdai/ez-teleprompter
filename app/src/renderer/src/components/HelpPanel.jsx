@@ -16,7 +16,8 @@ const SHORTCUTS = [
   ['F', '全屏'],
   ['H', '显示 / 隐藏控制台'],
   ['S', '设置'],
-  ['?', '本帮助']
+  ['?', '本帮助'],
+  ['PageDown / PageUp', '播放暂停 / 回到顶部（蓝牙翻页器）']
 ]
 
 export default function HelpPanel({ onClose, interactiveProps }) {
@@ -62,7 +63,7 @@ export default function HelpPanel({ onClose, interactiveProps }) {
 
           <p className="help-note" style={{ marginTop: 10 }}>
             开启<b>遥控模式</b>后，以下按键改为<b>全局</b>生效（即使窗口未聚焦）：PageDown / F8 播放暂停 · PageUp
-            回到顶部 · F6 / F7 减速 / 加速。
+            回到顶部 · F6 / F7 减速 / 加速。翻页器的 PageDown / PageUp 在窗口聚焦时也是同样的动作。
           </p>
 
           <div className="field-label" style={{ marginTop: 14 }}>

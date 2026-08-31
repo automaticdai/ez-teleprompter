@@ -1,3 +1,5 @@
+import { CLICKER_KEYMAP } from '../../../shared/clicker-keys.js'
+
 // The full set of commands every input source funnels into, plus the default
 // keyboard map. Keeping this pure makes it unit-testable and lets the keyboard,
 // gamepad, global remote, and on-screen buttons all share one vocabulary.
@@ -23,15 +25,15 @@ export const COMMANDS = [
   'quit'
 ]
 
-// KeyboardEvent.code -> command id. PageUp/PageDown are included because many
-// Bluetooth presentation remotes emit them.
+// KeyboardEvent.code -> command id. The PageUp/PageDown entries come from the
+// shared clicker map, so a Bluetooth remote behaves identically whether or not
+// this window is focused (remote mode registers the same pair globally).
 export const DEFAULT_KEYMAP = {
+  ...CLICKER_KEYMAP,
   Space: 'playPause',
   KeyR: 'reset',
   ArrowUp: 'speedUp',
   ArrowDown: 'speedDown',
-  PageUp: 'speedUp',
-  PageDown: 'speedDown',
   ArrowRight: 'fontUp',
   ArrowLeft: 'fontDown',
   KeyM: 'toggleMirror',

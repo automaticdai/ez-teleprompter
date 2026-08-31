@@ -42,7 +42,13 @@ body,
    scrollable surfaces (reading viewport, settings drawer) must opt out too —
    a `-webkit-app-region: drag` region swallows wheel events on Windows, which
    is what broke wheel-scrolling over the text and the settings panel. The
-   window is moved via the dedicated `.move-bar` handle instead. */
+   window is moved via the dedicated `.move-bar` handle instead.
+
+   Ordering matters more than stacking here: the browser reports app-region
+   rects in DOM order and Electron folds them into one region in that order
+   (drag unions, no-drag subtracts). `.reading-viewport` covers the whole card,
+   so anything draggable must be declared AFTER it in the markup — see the
+   grip's placement in App.jsx. */
 .no-drag,
 button,
 input,
@@ -55,12 +61,16 @@ a,
 }
 
 /* Slim drag handle at the top of the prompter (revealed on hover) — the only
-   way to move the frameless window now that the text area is no-drag. */
+   way to move the frameless window now that the text area is no-drag.
+   Centred with auto margins rather than a translate, because a drag region's
+   rect is taken from layout and needn't follow a CSS transform. */
 .move-bar {
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  width: max-content;
+  margin: 0 auto;
   z-index: 6;
   display: flex;
   align-items: center;

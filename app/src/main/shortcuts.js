@@ -6,12 +6,13 @@
 // Keys here are chosen to minimize conflicts and to match what common
 // presentation clickers emit. `dispatch(commandId)` forwards to the renderer.
 import { globalShortcut } from 'electron'
+import { CLICKER_KEYMAP } from '../shared/clicker-keys.js'
 
-// Electron accelerator -> command id. Many BT clickers send Page Up/Down or
-// arrow keys; F-keys are included as low-conflict speed controls.
+// Electron accelerator -> command id. The Page Up/Down pair is shared with the
+// in-app keymap so a clicker does the same thing focused or not; the F-keys are
+// low-conflict additions for speed and a second play/pause.
 const GLOBAL_MAP = {
-  PageDown: 'playPause',
-  PageUp: 'reset',
+  ...CLICKER_KEYMAP,
   F6: 'speedDown',
   F7: 'speedUp',
   F8: 'playPause'

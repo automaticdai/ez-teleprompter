@@ -187,10 +187,6 @@ export default function App() {
       className={`glass-card ${locked ? 'locked' : ''}`}
       style={{ background: cardBg, '--edge': hexToRgba(settings.textColor, 0.18) }}
     >
-      <div className="move-bar" title="拖动移动窗口">
-        ⋮⋮
-      </div>
-
       <ReadingArea
         engine={engine}
         settings={settings}
@@ -199,6 +195,19 @@ export default function App() {
         onExitEdit={() => dispatch('toggleEdit')}
         interactiveProps={interactiveProps}
       />
+
+      {/* The drag grip MUST be declared after the reading area and before the
+          drawer / help overlays. Draggable regions are folded in DOM order
+          (drag unions, no-drag subtracts), so the viewport's no-drag rect —
+          which covers the whole card — would erase the grip if it came first,
+          and the overlays that paint over the grip must still be able to
+          subtract it. It is dropped entirely while editing, where the editor
+          overlay covers it and any click there belongs to the textarea. */}
+      {!editing && (
+        <div className="move-bar" title="拖动移动窗口">
+          ⋮⋮
+        </div>
+      )}
 
       {locked && <div className="lock-pill">🔒 已锁定 — 按 L 解锁</div>}
 
